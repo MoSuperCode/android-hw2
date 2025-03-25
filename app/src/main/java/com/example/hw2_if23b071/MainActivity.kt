@@ -93,7 +93,7 @@ fun MagicCardListScreen(
     ) {
         // Das ist meine scrollbare textarea
         Text(
-            text = "cardListText",
+            text = cardListText,
             modifier = Modifier
                 .weight(1f)
                 .padding(16.dp)
