@@ -77,7 +77,7 @@ fun MagicCardListScreen(
     onPageChange: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var cardListText by remember { mutableStateOf("") }
+    var cardListText by rememberSaveable { mutableStateOf("") }
     var isButtonEnabled by remember { mutableStateOf(true) }
     var currentPage by rememberSaveable { mutableStateOf(initialPage) }
 
