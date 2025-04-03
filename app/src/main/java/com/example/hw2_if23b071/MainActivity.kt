@@ -11,8 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,6 +32,8 @@ import com.example.hw2_if23b071.dto.MagicCard
 import com.example.hw2_if23b071.network.NetworkUtils
 import com.example.hw2_if23b071.parser.MagicCardParser
 import com.example.hw2_if23b071.ui.theme.Hw2if23b071Theme
+import com.example.hw2_if23b071.ui.theme.Purple40
+import com.example.hw2_if23b071.ui.theme.PurpleGrey40
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -42,6 +47,7 @@ class MainActivity : ComponentActivity() {
         private const val STATE_PAGE = "current_page"
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -53,7 +59,14 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Hw2if23b071Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(
+                    topBar = {
+                        TopAppBar(
+                            title = { Text(stringResource(R.string.magic_card_list)) }
+                        )
+                    },
+                    modifier = Modifier.fillMaxSize()
+                ) { innerPadding ->
                     MagicCardListScreen(
                         initialPage = currentPage,
                         onPageChange = { page -> currentPage = page},
@@ -147,19 +160,14 @@ fun MagicCardListScreen(
                         isButtonEnabled = true
                     }
                 }
-
-
-
-                // nach dem laden wieder Enablen
-                },
-                enabled = isButtonEnabled
+            },
+            enabled = isButtonEnabled
         ) {
             Text(text = stringResource(R.string.load_cards))
         }
-
     }
-
 }
+
 private fun formatCardList(cards: List<MagicCard>): String {
     val builder = StringBuilder()
 
@@ -169,4 +177,3 @@ private fun formatCardList(cards: List<MagicCard>): String {
 
     return builder.toString()
 }
-
